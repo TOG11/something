@@ -24,7 +24,6 @@ public class EnemyController : MonoBehaviour
         if (moveTowards)
         {
             var step = speed * Time.deltaTime;
-            print(Vector3.Distance(transform.position, TargetPlayer.playerInstance.transform.position));
             if (Vector3.Distance(transform.position, TargetPlayer.playerInstance.transform.position) > 6 && !go_to_cam)
             {
                 transform.position = Vector3.MoveTowards(transform.position, TargetPlayer.playerInstance.transform.position, step);

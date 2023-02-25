@@ -1,5 +1,4 @@
 using UnityEngine;
-using GameSystem;
 public class PlayerController : MonoBehaviour
 {
     internal Camera cam;
@@ -27,31 +26,5 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector2.MoveTowards(
             transform.position,
             get_mouse_to_world_pos(), step);
-
-        int layerMask = 1 << 8;
-
-        layerMask = ~layerMask;
-
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, layerMask))
-        {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-
-            Vector3 screenPoint = hit.transform.position;
-            screenPoint.z = 10.0f; 
-            Vector3 screenPos = Camera.main.ScreenToWorldPoint(screenPoint);
-
-            Canvas localCanvas = GameObject.FindGameObjectWithTag("LOCALCANVAS").GetComponent<Canvas>();
-            RectTransform canvasRect = localCanvas.GetComponent<RectTransform>();
-            RectTransform targetRect = GameObject.FindGameObjectWithTag("TARGET").GetComponent<RectTransform>(); ;
-
-            
-
-            if (hit.transform.gameObject.tag == "SHIP")
-            {
-
-            }
-        }
-        else
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
     }
 }
