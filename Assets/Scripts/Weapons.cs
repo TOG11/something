@@ -38,13 +38,13 @@ public class Weapons : MonoBehaviour
             r.drag = 0;
             r.useGravity = false;
             r.velocity = LookingTowards * 80;
-            player.shoot = true;
+            Shoot(player);
         }
-        if (player.shoot)
-        {
-            //delay to shoot again & delete bullet after shoot
-            StartCoroutine(Wait(0.7f, () => { Destroy(TEMP_PARENT); player.shoot = false; TEMP_PARENT = null; }));
-        }
+    }
+
+    public void Shoot(GameClasses.Player player)
+    {
+        StartCoroutine(Wait(2f, () => { player.shoot = false; TEMP_PARENT = null; }));
     }
 
     private void Update()

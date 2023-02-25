@@ -7,40 +7,42 @@ using System;
 public class Spawner : MonoBehaviour
 {
     public static Spawner singleton;
-    internal GameUtilitys.Health Health = new GameUtilitys.Health();
+    internal GameUtilities.Health Health = new GameUtilities.Health();
     public List<GameClasses.Player> Players = new List<GameClasses.Player>();
     public Vector3 PlayerStartingPosition;
     public Vector3 EnemyStartingPosition;
-    public List<GameClasses.Enemey> Enemys = new List<GameClasses.Enemey>();
+    public List<GameClasses.Enemy> Enemys = new List<GameClasses.Enemy>();
 
     private void Awake()
     {
+        singleton = this;
+
         //initialize players
         foreach (var i in Players)
         {
             var p = Instantiate(i.playerPrefab);
+            foreach (var barrel in p.GetComponentsInChildren<Transform>())
+            {
+                if (barrel.gameObject.tag == "BARREL")
+                    i.GunBarrels.Add(barrel.gameObject);
+            }
             i.playerInstance = p;
             p.transform.position = PlayerStartingPosition;
-            i.Health = new GameUtilitys.Health();
-            i.GunBarrels.ForEach((barrel) =>
-            {
-                var b = Instantiate(barrel);
-                b.transform.parent = p.transform;
-            });
+            i.Health = new GameUtilities.Health();
         }
 
         foreach (var i in Enemys)
         {
-            var p = Instantiate(i.enemyPrefab);
-            i.enemyInstance = p;
-            p.transform.position = EnemyStartingPosition;
-            i.Health = new GameUtilitys.Health();
-            i.GunBarrels.ForEach((barrel) =>
-            {
-                var b = Instantiate(barrel);
-                b.transform.parent = p.transform;
-            });
+            var e = Instantiate(i.enemyPrefab);
+            if (e.GetComponentsInChildren<Transform>()[0] != null)
+                foreach (var barrel in e.GetComponentsInChildren<Transform>())
+                {
+                    if (barrel.gameObject.tag == "BARREL")
+                        i.GunBarrels.Add(barrel.gameObject);
+                }
+            i.enemyInstance = e;
+            e.transform.position = EnemyStartingPosition;
+            i.Health = new GameUtilities.Health();
         }
-        singleton = this;
     }
 }
