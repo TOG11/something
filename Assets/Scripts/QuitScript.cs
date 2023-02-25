@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class QuitScript : MonoBehaviour
 {
-    private void Update()
+    public void quit()
     {
-        if (Input.GetKey(KeyCode.Escape))
-            Application.Quit();
+        Application.Quit();
     }
 }

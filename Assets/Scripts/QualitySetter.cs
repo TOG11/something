@@ -2,31 +2,46 @@ using UnityEngine;
 
 public class QualitySetter : MonoBehaviour
 {
-    public string quality_str;
+    public string low_preset_name;
+    public string med_preset_name;
+    public string high_preset_name;
 
-    void Start()
+    private int find_quality_lvl_idx(string name)
     {
-        string[] quality_names = QualitySettings.names;
+        for (int i = 0; i < name.Length; i++)
+            if (name == QualitySettings.names[i])
+                return i;
 
-        bool quality_found = false;
-        for (int i = 0; i < quality_names.Length; i++)
-        {
-            if (quality_str == quality_names[i])
-            {
-                QualitySettings.SetQualityLevel(i, true);
-                quality_found = true;
-            }
-        }
+        return -1;
+    }
 
-        if (!quality_found)
-        {
-            string avail_names = "";
-            foreach (string name in quality_names)
-                avail_names += "'" + name + "', ";
-            avail_names = avail_names.TrimEnd(',', ' ');
+    private bool set_quality(string name)
+    {
+        int idx = find_quality_lvl_idx(name);
+        if (idx < 0)
+            return false;
 
-            Debug.LogWarning("Failed to set quality to '" + quality_str +
-                "'.\nAvailable qualities: " + avail_names + ".");
-        }
+        QualitySettings.SetQualityLevel(idx, true);
+        return true;
+    }
+
+    public void set_quality_low()
+    {
+        set_quality(low_preset_name);
+    }
+
+    public void set_quality_med()
+    {
+        set_quality(med_preset_name);
+    }
+
+    public void set_quality_high()
+    {
+        set_quality(high_preset_name);
+    }
+
+    private void Start()
+    {
+        set_quality_low();
     }
 }
