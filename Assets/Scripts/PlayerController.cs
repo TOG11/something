@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using GameSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
     public float speed = 5.0f;
 
     private Vector3 get_mouse_to_world_pos()
@@ -30,9 +27,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        int layerMask = 1 << 8;
+        int layerMask = ~(1 << 8);
 
-        layerMask = ~layerMask;
         RaycastHit hit;
         Vector3 castPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z + 2);
         if (Physics.Raycast(castPoint, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
