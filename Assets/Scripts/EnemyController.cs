@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public float speed = 10.0f;
-    public float pass_by_damage = 0.5f;
+    public float passby_damage = 0.5f;
 
     private GameClasses.Player player;
     private bool move_to_player = true;
@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
             /* Damage player and remove enemy when it passes past the camera */
             if (transform.position.z < Camera.main.transform.position.z)
             {
-                player.Health.RemoveHealth(pass_by_damage);
+                player.Health.RemoveHealth(passby_damage);
                 Spawner.singleton.remove_enemy(gameObject);
             }
         }
