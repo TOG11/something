@@ -1,6 +1,7 @@
 using UnityEngine;
 using GameSystem;
 using System.Collections.Generic;
+using TMPro;
 
 public class Spawner : MonoBehaviour
 {
@@ -12,14 +13,18 @@ public class Spawner : MonoBehaviour
     public Vector3 player_start_pos = Vector3.zero;
     public float enemy_z_pos = 50.0f;
 
+    [Header("Misc")]
+    public GameObject Target;
+    public TextMeshProUGUI score_text;
+
     [System.NonSerialized]
     public GameClasses.Player player = new GameClasses.Player();
     [System.NonSerialized]
     public List<GameClasses.Enemy> enemies = new List<GameClasses.Enemy>();
 
     public static Spawner singleton = null;
-    private int current_wave = 1;
-    public GameObject Target;
+    /* Wave starts at zero with no enemies on screen. */
+    private int current_wave = 0;
 
     private void create_player()
     {
@@ -86,6 +91,7 @@ public class Spawner : MonoBehaviour
         if (enemies.Count == 0)
         {
             current_wave += 1;
+            score_text.text = $"Score: {current_wave}";
             spawn_enemy_wave();
         }
     }
