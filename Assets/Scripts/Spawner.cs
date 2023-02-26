@@ -1,7 +1,7 @@
-using UnityEngine;
 using GameSystem;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour
 
     [Header("Misc")]
     public GameObject Target;
-    public TextMeshProUGUI score_text;
+    public TextMeshProUGUI wave_text;
 
     [System.NonSerialized]
     public GameClasses.Player player = new GameClasses.Player();
@@ -95,10 +95,10 @@ public class Spawner : MonoBehaviour
         if (enemies.Count == 0)
         {
             current_wave += 1;
+
+            wave_text.text = $"Wave: {current_wave}";
             if (current_wave == 69 || current_wave == 420 || current_wave == 69420)
-                score_text.text = $"Score: {current_wave} (Nice!)";
-            else
-                score_text.text = $"Score: {current_wave}";
+                wave_text.text += " (Nice!)";
 
             spawn_enemy_wave();
         }

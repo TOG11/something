@@ -1,5 +1,5 @@
-using UnityEngine;
 using GameSystem;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(castPoint, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.yellow);
-            if (hit.transform.gameObject.tag == "SHIP")
+            if (hit.transform.gameObject.CompareTag("SHIP"))
             {
                 FuncUtils.HideTarget(false);
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.green);
