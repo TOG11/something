@@ -11,9 +11,9 @@ public class Spawner : MonoBehaviour
 
     [Header("Starting positions")]
     public Vector3 player_start_pos = Vector3.zero;
-    public Vector2 enemy_vert_pos_range = new Vector2(-10, 10);
-    public Vector2 enemy_horiz_pos_range = new Vector2(-10, 10);
-    public Vector2 enemy_z_range = new Vector2(50, 70);
+    public Vector2 enemy_vert_pos_range = new(-10, 10);
+    public Vector2 enemy_horiz_pos_range = new(-10, 10);
+    public Vector2 enemy_z_range = new(50, 70);
 
     [Header("Objects")]
     public GameObject Target;
@@ -23,14 +23,15 @@ public class Spawner : MonoBehaviour
     public TextMeshProUGUI score_text;
     public TextMeshProUGUI health_level;
 
-    public GameClasses.Player player = new GameClasses.Player();
-    public List<GameClasses.Enemy> enemies = new List<GameClasses.Enemy>();
     [System.NonSerialized]
+    public GameClasses.Player player = new();
+    [System.NonSerialized]
+    public List<GameClasses.Enemy> enemies = new();
 
-    public static Spawner singleton = null;
     /* Wave starts at zero with no enemies on screen. */
     private int current_wave = 0;
     private int score = 0;
+    public static Spawner singleton = null;
     private void create_player()
     {
         GameObject plr = Instantiate(player_prefab);
