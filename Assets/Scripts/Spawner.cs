@@ -19,9 +19,7 @@ public class Spawner : MonoBehaviour
     public GameObject Target;
     public TextMeshProUGUI wave_text;
 
-    [System.NonSerialized]
     public GameClasses.Player player = new GameClasses.Player();
-    [System.NonSerialized]
     public List<GameClasses.Enemy> enemies = new List<GameClasses.Enemy>();
 
     public static Spawner singleton = null;
@@ -44,7 +42,7 @@ public class Spawner : MonoBehaviour
     private void create_enemy(Vector3 pos)
     {
         GameClasses.Enemy enemy = new GameClasses.Enemy();
-
+        enemy_prefab.name += "_"+Random.value;
         GameObject go = Instantiate(enemy_prefab);
         foreach (Transform barrel in go.GetComponentsInChildren<Transform>())
             if (barrel.gameObject.tag == "BARREL")
@@ -68,6 +66,7 @@ public class Spawner : MonoBehaviour
                 break;
             }
         }
+        FuncUtils.RemoveEnemyCallback(enemies);
     }
 
     private void Awake()
@@ -86,6 +85,7 @@ public class Spawner : MonoBehaviour
             float z = Random.Range(enemy_z_range.x, enemy_z_range.y);
             create_enemy(new Vector3(x, y, z));
         }
+        FuncUtils.AddEnemyCallback(enemies);
     }
 
     private void Update()

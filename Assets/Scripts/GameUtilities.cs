@@ -51,7 +51,50 @@ namespace GameSystem
     [Serializable]
     public class FuncUtils
     {
-        static public void HideTarget(bool hide)
+        public static IEnumerator<WaitForSeconds> Wait(float time, Action func)
+        {
+            yield return new WaitForSeconds(time);
+            func.Invoke();
+        }
+
+        public static IEnumerator<WaitForEndOfFrame> Looper(int loopTimes, Action funcToLoop)
+        {
+            for (int i = 0; i < loopTimes; i++)
+            {
+                funcToLoop.Invoke();
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
+        public static void AddEnemyCallback(List<GameClasses.Enemy> enemys)
+        {
+            Weapons.singleton.AddEnemyCallback(enemys);
+        }
+
+        public static void RemoveEnemyCallback(List<GameClasses.Enemy> enemys)
+        {
+            Weapons.singleton.RemoveEnemyCallback(enemys);
+        }
+
+        public static Transform GetClosestEnemy(Vector3 fromPos)
+        {
+            Transform tMin = null;
+            float minDist = Mathf.Infinity;
+            Vector3 currentPos = fromPos;
+            foreach (GameClasses.Enemy enemy in Spawner.singleton.enemies)
+            {
+                Transform t = enemy.instance.transform;
+                float dist = Vector3.Distance(t.position, currentPos);
+                if (dist < minDist)
+                {
+                    tMin = t;
+                    minDist = dist;
+                }
+            }
+            return tMin;
+        }
+
+        public static void HideTarget(bool hide)
         {
             Spawner.singleton.Target.SetActive(!hide);
         }
