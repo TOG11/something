@@ -12,9 +12,9 @@ public class Bullet : MonoBehaviour
     public int health_max = 7;
 
     [Range(0, 50)]
-    public int enmmy_health_min = 3;
+    public int player_health_min = 3;
     [Range(0, 50)]
-    public int enmmy_health_max = 7;
+    public int player_health_max = 7;
 
     [Header("Scene")]
     public string death_scene;
@@ -68,7 +68,7 @@ public class Bullet : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player") && IsEnemy)
         {
-            Spawner.singleton.player.Health.RemoveHealth(Random.Range(enmmy_health_min, enmmy_health_max));
+            Spawner.singleton.player.Health.RemoveHealth(Random.Range(player_health_min, player_health_max));
             if (Spawner.singleton.player.Health.HP <= 0.0f)
             {
                 SceneManager.LoadScene(death_scene);
