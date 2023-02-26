@@ -24,17 +24,19 @@ public class EnemyController : MonoBehaviour
         if (moveTowards)
         {
             var step = speed * Time.deltaTime;
-            if (Vector3.Distance(transform.position, TargetPlayer.playerInstance.transform.position) > 6 && !go_to_cam)
+            if (Vector3.Distance(transform.position, TargetPlayer.playerInstance.transform.position) > 1f && !go_to_cam)
             {
                 transform.position = Vector3.MoveTowards(transform.position, TargetPlayer.playerInstance.transform.position, step);
             }
             else if (Vector3.Distance(transform.position, Camera.main.transform.position) > 0.001f)
             {
+                tag = "BARREL";
                 go_to_cam = true;
                 if (!set_speed)
                 {
+                    FuncUtils.HideTarget(true);
                     set_speed = true;
-                    speed = (speed * 2) + 3;
+                    speed = (speed * 2) + 7.5f;
                 }
                 transform.Rotate(Camera.main.transform.rotation.eulerAngles * Time.deltaTime * speed);
                 transform.position = Vector3.MoveTowards(transform.position, Camera.main.transform.position, step);

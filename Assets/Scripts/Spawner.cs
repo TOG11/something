@@ -6,6 +6,7 @@ using System;
 
 public class Spawner : MonoBehaviour
 {
+    public GameObject Target;
     public static Spawner singleton;
     internal GameUtilities.Health Health = new GameUtilities.Health();
     public List<GameClasses.Player> Players = new List<GameClasses.Player>();
@@ -44,5 +45,10 @@ public class Spawner : MonoBehaviour
             e.transform.position = EnemyStartingPosition;
             i.Health = new GameUtilities.Health();
         }
+    }
+
+    private void Update()
+    {
+        Target.transform.Rotate(new Vector3(0, 0, 1 * Time.deltaTime * 32));
     }
 }

@@ -1,4 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using GameSystem;
+
 public class PlayerController : MonoBehaviour
 {
     internal Camera cam;
@@ -26,5 +30,31 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector2.MoveTowards(
             transform.position,
             get_mouse_to_world_pos(), step);
+    }
+
+    private void FixedUpdate()
+    {
+        int layerMask = 1 << 8;
+
+        layerMask = ~layerMask;
+        RaycastHit hit;
+        Vector3 castPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z + 10);
+        if (Physics.Raycast(castPoint, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.yellow);
+            if (hit.transform.gameObject.tag == "SHIP")
+            {
+                FuncUtils.HideTarget(false);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.green);
+                RectTransform enemyRect = hit.transform.gameObject.GetComponent<RectTransform>();
+                RectTransform targetRect = GameObject.FindGameObjectWithTag("TARGET").GetComponent<RectTransform>();
+                targetRect.position = new Vector3(enemyRect.position.x, enemyRect.position.y, enemyRect.position.z);
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.red);
+            FuncUtils.HideTarget(true);
+        }
     }
 }
