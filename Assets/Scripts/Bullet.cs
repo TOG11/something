@@ -1,6 +1,7 @@
 using GameSystem;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bullet : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Bullet : MonoBehaviour
     public int enmmy_health_min = 3;
     [Range(0, 50)]
     public int enmmy_health_max = 7;
+
+    public string death_scene;
 
     public bool IsEnemy;
     internal List<GameClasses.Enemy> enemies;
@@ -58,7 +61,9 @@ public class Bullet : MonoBehaviour
         {
             Spawner.singleton.player.Health.RemoveHealth(Random.Range(enmmy_health_min, enmmy_health_max));
             if (Spawner.singleton.player.Health.HP <= 0.0f)
-                Destroy(Spawner.singleton.player.instance);
+            {
+                SceneManager.LoadScene(death_scene);
+            }
         }
     }
 
