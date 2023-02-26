@@ -114,4 +114,5 @@ MonoBehaviour:
   health_max: 7
   enmmy_health_min: 3
   enmmy_health_max: 7
+  death_scene: Death
   IsEnemy: 0
