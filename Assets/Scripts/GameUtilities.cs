@@ -24,24 +24,6 @@ namespace GameSystem
                 return HP;
             }
         }
-
-        [Serializable]
-        public class Ammo
-        {
-            public static int Mag = 25;
-
-            public int AddAmmo(int add)
-            {
-                Mag += add;
-                return Mag;
-            }
-
-            public int RemoveHealth(int rem)
-            {
-                Mag -= rem;
-                return Mag;
-            }
-        }
     }
 
     [Serializable]
@@ -71,24 +53,6 @@ namespace GameSystem
     [Serializable]
     public class FuncUtils
     {
-        static Transform GetClosestEnemy(Vector3 fromPos)
-        {
-            Transform tMin = null;
-            float minDist = Mathf.Infinity;
-            Vector3 currentPos = fromPos;
-            foreach (GameClasses.Enemy enemy in Spawner.singleton.enemies)
-            {
-                Transform t = enemy.instance.transform;
-                float dist = Vector3.Distance(t.position, currentPos);
-                if (dist < minDist)
-                {
-                    tMin = t;
-                    minDist = dist;
-                }
-            }
-            return tMin;
-        }
-
         static public void HideTarget(bool hide)
         {
             Spawner.singleton.Target.SetActive(!hide);

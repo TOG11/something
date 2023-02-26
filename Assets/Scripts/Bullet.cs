@@ -1,28 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using GameSystem;
+using System.Collections.Generic;
 
 public class Bullet : MonoBehaviour
 {
-    internal bool stop;
-    void FixedUpdate()
-    {
-        int layerMask = 1 << 8;
+    [Range(0, 50)]
+    public int health_min = 3;
+    [Range(0, 50)]
+    public int health_max = 7;
 
-        layerMask = ~layerMask;
+    internal List<GameClasses.Enemy> enemies;
+    internal bool stop;
+
+    private void Awake()
+    {
+        enemies = Spawner.singleton.enemies;
+    }
+
+    private void FixedUpdate()
+    {
+        int layerMask = ~(1 << 8);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask) && !stop)
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(transform.position, forward, out hit, Mathf.Infinity, layerMask) && !stop)
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            for (int i = 0; i < Spawner.singleton.enemies.Count; i++)
+            Debug.DrawRay(transform.position, forward * hit.distance, Color.yellow);
+            for (int i = 0; i < enemies.Count; i++)
             {
-                if (hit.transform.gameObject.tag == "SHIP")
+                if (hit.transform.gameObject.CompareTag("SHIP"))
                 {
-                    GameClasses.Enemy enemy = Spawner.singleton.enemies[i];
-                    enemy.Health.RemoveHealth(Random.Range(0, 20));
-                    if (enemy.Health.HP <= 0)
+                    enemies[i].Health.RemoveHealth(Random.Range(health_min, health_max));
+                    if (enemies[i].Health.HP <= 0.0f)
                         Spawner.singleton.remove_enemy(hit.transform.gameObject);
                     else
                         stop = true;
@@ -31,9 +40,19 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    private void delete_bullet()
+    {
+        Destroy(transform.parent.gameObject);
+    }
+
     private void Update()
     {
-        if (transform.position.z > 200f)
-            Destroy(transform.parent.gameObject);
+        if (transform.position.z > 200.0f)
+            delete_bullet();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        delete_bullet();
     }
 }
