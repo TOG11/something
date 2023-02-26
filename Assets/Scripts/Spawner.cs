@@ -87,4 +87,9 @@ public class Spawner : MonoBehaviour
             spawn_enemy_wave();
         }
     }
+
+    private void Update()
+    {
+        Target.transform.Rotate(new Vector3(0, 0, 1 * Time.deltaTime * 32));
+    }
 }

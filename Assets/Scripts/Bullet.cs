@@ -30,4 +30,10 @@ public class Bullet : MonoBehaviour
             }
         }
     }
+
+    private void Update()
+    {
+        if (transform.position.z > 200f)
+            Destroy(transform.parent.gameObject);
+    }
 }

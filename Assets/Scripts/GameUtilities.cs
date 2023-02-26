@@ -71,7 +71,7 @@ namespace GameSystem
     [Serializable]
     public class FuncUtils
     {
-        Transform GetClosestEnemy(Vector3 fromPos)
+        static Transform GetClosestEnemy(Vector3 fromPos)
         {
             Transform tMin = null;
             float minDist = Mathf.Infinity;
@@ -87,6 +87,11 @@ namespace GameSystem
                 }
             }
             return tMin;
+        }
+
+        static public void HideTarget(bool hide)
+        {
+            Spawner.singleton.Target.SetActive(!hide);
         }
     }
 };

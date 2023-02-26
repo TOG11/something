@@ -35,6 +35,7 @@ public class Weapons : MonoBehaviour
             var r = TEMP_PARENT.AddComponent<Rigidbody>();
             r.drag = 0;
             r.useGravity = false;
+            TEMP_PARENT.transform.parent = null;
             r.velocity = LookingTowards * 80;
             Shoot(player);
         }
