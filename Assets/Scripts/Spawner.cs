@@ -42,7 +42,7 @@ public class Spawner : MonoBehaviour
     private void create_enemy(Vector3 pos)
     {
         GameClasses.Enemy enemy = new GameClasses.Enemy();
-
+        enemy_prefab.name += "_"+Random.value;
         GameObject go = Instantiate(enemy_prefab);
         foreach (Transform barrel in go.GetComponentsInChildren<Transform>())
             if (barrel.gameObject.tag == "BARREL")

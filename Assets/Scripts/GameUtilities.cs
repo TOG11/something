@@ -53,6 +53,21 @@ namespace GameSystem
     [Serializable]
     public class FuncUtils
     {
+        public static IEnumerator<WaitForSeconds> Wait(float time, Action func)
+        {
+            yield return new WaitForSeconds(time);
+            func.Invoke();
+        }
+
+        public static IEnumerator<WaitForEndOfFrame> Looper(int loopTimes, Action funcToLoop)
+        {
+            for (int i = 0; i < loopTimes; i++)
+            {
+                funcToLoop.Invoke();
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
         public static void AddEnemyCallback(List<GameClasses.Enemy> enemys)
         {
             Weapons.singleton.AddEnemyCallback(enemys);

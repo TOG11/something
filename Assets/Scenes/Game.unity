@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18956414, g: 0.2306486, b: 0.19841394, a: 1}
+  m_IndirectSpecularColor: {r: 0.18959248, g: 0.23062879, b: 0.19839135, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,7 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 5495145829446600866, guid: eff07dc56c1558543844c4246c83a76e, type: 3}
+  EnemyBulletPrefab: {fileID: 5495145829446600866, guid: 3e7310603d4056749b5bbd7f28d97ba8, type: 3}
   speed: 300
+  EnemyBulletIntervalInSecinds: 1
 --- !u!4 &46411492
 Transform:
   m_ObjectHideFlags: 0
@@ -858,9 +860,18 @@ MonoBehaviour:
   player_prefab: {fileID: 2142346890039965897, guid: f671167c7cee4f6418b76447953658c4, type: 3}
   enemy_prefab: {fileID: 6606586650921902143, guid: fb6b3f68871741d47b80d8129c158bfc, type: 3}
   player_start_pos: {x: 0, y: 0, z: 0}
-  enemy_z_pos: 50
+  enemy_vert_pos_range: {x: -10, y: 10}
+  enemy_horiz_pos_range: {x: -10, y: 10}
+  enemy_z_range: {x: 50, y: 70}
   Target: {fileID: 140721614}
   score_text: {fileID: 158529044}
+  player:
+    instance: {fileID: 0}
+    prefab: {fileID: 0}
+    Health:
+      HP: 100
+    GunBarrels: []
+  enemies: []
 --- !u!4 &1812426528
 Transform:
   m_ObjectHideFlags: 0

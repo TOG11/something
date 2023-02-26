@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [Range(0, 50)]
     public int health_max = 7;
 
+    public bool IsEnemy;
     internal List<GameClasses.Enemy> enemies;
     internal bool stop;
 
@@ -19,24 +20,48 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        int layerMask = ~(1 << 8);
-
-        RaycastHit hit;
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        if (Physics.Raycast(transform.position, forward, out hit, Mathf.Infinity, layerMask) && !stop)
+        if (!IsEnemy)
         {
-            Debug.DrawRay(transform.position, forward * hit.distance, Color.yellow);
-            for (int i = 0; i < enemies.Count; i++)
+            int layerMask = ~(1 << 8);
+
+            RaycastHit hit;
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+            if (Physics.Raycast(transform.position, forward, out hit, Mathf.Infinity, layerMask) && !stop)
             {
-                if (hit.transform.gameObject.CompareTag("SHIP"))
+                Debug.DrawRay(transform.position, forward * hit.distance, Color.yellow);
+                for (int i = 0; i < enemies.Count; i++)
                 {
-                    enemies[i].Health.RemoveHealth(Random.Range(health_min, health_max));
-                    if (enemies[i].Health.HP <= 0.0f)
-                        Spawner.singleton.remove_enemy(hit.transform.gameObject);
-                    else
-                        stop = true;
+                    if (hit.transform.gameObject.CompareTag("SHIP"))
+                    {
+                        enemies[i].Health.RemoveHealth(Random.Range(health_min, health_max));
+                        if (enemies[i].Health.HP <= 0.0f)
+                            Spawner.singleton.remove_enemy(hit.transform.gameObject);
+                        else
+                            stop = true;
+                    }
                 }
             }
+        }
+        else if (IsEnemy)
+        {
+            /*
+            int layerMask = ~(1 << 8);
+
+            RaycastHit hit;
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+            if (Physics.Raycast(transform.position, forward, out hit, Mathf.Infinity, layerMask) && !stop)
+            {
+                Debug.DrawRay(transform.position, forward * hit.distance, Color.yellow);
+                    if (hit.transform.gameObject.CompareTag("Player"))
+                    {
+                        player.Health.RemoveHealth(Random.Range(health_min, health_max));
+                        if (enemies[i].Health.HP <= 0.0f)
+                            Spawner.singleton.remove_enemy(hit.transform.gameObject);
+                        else
+                            stop = true;
+                    }
+            }
+            */
         }
     }
 
