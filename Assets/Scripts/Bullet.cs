@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour
                     {
                         enemies[i].Health.RemoveHealth(Random.Range(health_min, health_max));
                         if (enemies[i].Health.HP <= 0.0f)
-                            Spawner.singleton.remove_enemy(hit.transform.gameObject);
+                            Spawner.singleton.kill_enemy(hit.transform.gameObject);
                         else
                             stop = true;
                     }
