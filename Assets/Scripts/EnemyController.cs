@@ -2,7 +2,6 @@ using UnityEngine;
 using GameSystem;
 public class EnemyController : MonoBehaviour
 {
-    internal Camera cam;
     public GameClasses.Player TargetPlayer;
     public bool moveTowards = true;
     public float speed = 5.0f;
@@ -13,7 +12,6 @@ public class EnemyController : MonoBehaviour
             TargetPlayer = Spawner.singleton.Players[Random.Range(0, Spawner.singleton.Players.Count - 1)];
         else
             TargetPlayer = Spawner.singleton.Players[0];
-        cam = Camera.main;
     }
 
 
@@ -30,11 +28,9 @@ public class EnemyController : MonoBehaviour
             }
             else if (Vector3.Distance(transform.position, Camera.main.transform.position) > 0.001f)
             {
-                tag = "BARREL";
                 go_to_cam = true;
                 if (!set_speed)
                 {
-                    FuncUtils.HideTarget(true);
                     set_speed = true;
                     speed = (speed * 2) + 7.5f;
                 }

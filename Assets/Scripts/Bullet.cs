@@ -24,6 +24,7 @@ public class Bullet : MonoBehaviour
                     if (enemy.Health.HP <= 0)
                     {
                         Destroy(hit.transform.gameObject);
+                        FuncUtils.HideTarget(true);
                     }   
                     else
                         stop = true;
