@@ -11,7 +11,9 @@ public class Spawner : MonoBehaviour
 
     [Header("Starting positions")]
     public Vector3 player_start_pos = Vector3.zero;
-    public float enemy_z_pos = 50.0f;
+    public Vector2 enemy_vert_pos_range = new Vector2(-10, 10);
+    public Vector2 enemy_horiz_pos_range = new Vector2(-10, 10);
+    public Vector2 enemy_z_range = new Vector2(50, 70);
 
     [Header("Misc")]
     public GameObject Target;
@@ -31,7 +33,7 @@ public class Spawner : MonoBehaviour
         GameObject plr = Instantiate(player_prefab);
 
         foreach (Transform barrel in plr.GetComponentsInChildren<Transform>())
-            if (barrel.gameObject.tag == "BARREL")
+            if (barrel.gameObject.CompareTag("BARREL"))
                 player.GunBarrels.Add(barrel.gameObject);
 
         plr.transform.position = player_start_pos;
@@ -79,19 +81,25 @@ public class Spawner : MonoBehaviour
         int enemy_count = current_wave * 2;
         for (int i = 0; i < enemy_count; i++)
         {
-            float x = Random.Range(-10, 10);
-            float y = Random.Range(-10, 10);
-            create_enemy(new Vector3(x, y, enemy_z_pos));
+            float x = Random.Range(enemy_horiz_pos_range.x, enemy_horiz_pos_range.y);
+            float y = Random.Range(enemy_vert_pos_range.x, enemy_vert_pos_range.y);
+            float z = Random.Range(enemy_z_range.x, enemy_z_range.y);
+            create_enemy(new Vector3(x, y, z));
         }
     }
 
     private void Update()
     {
-        Target.transform.Rotate(new Vector3(0, 0, 1 * Time.deltaTime * 32));
+        Target.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 32));
+
         if (enemies.Count == 0)
         {
             current_wave += 1;
-            score_text.text = $"Score: {current_wave}";
+            if (current_wave == 69 || current_wave == 420 || current_wave == 69420)
+                score_text.text = $"Score: {current_wave} (Nice!)";
+            else
+                score_text.text = $"Score: {current_wave}";
+
             spawn_enemy_wave();
         }
     }
