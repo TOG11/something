@@ -19,6 +19,7 @@ public class Spawner : MonoBehaviour
 
     public static Spawner singleton = null;
     private int current_wave = 1;
+    public GameObject Target;
 
     private void create_player()
     {
@@ -81,15 +82,11 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
+        Target.transform.Rotate(new Vector3(0, 0, 1 * Time.deltaTime * 32));
         if (enemies.Count == 0)
         {
             current_wave += 1;
             spawn_enemy_wave();
         }
-    }
-
-    private void Update()
-    {
-        Target.transform.Rotate(new Vector3(0, 0, 1 * Time.deltaTime * 32));
     }
 }
