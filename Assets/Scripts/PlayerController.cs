@@ -5,7 +5,7 @@ using GameSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    internal Camera cam;
+    private Camera cam;
     public float speed = 5.0f;
     private void Awake()
     {
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
         layerMask = ~layerMask;
         RaycastHit hit;
-        Vector3 castPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z + 10);
+        Vector3 castPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z + 2);
         if (Physics.Raycast(castPoint, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.yellow);

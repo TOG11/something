@@ -222,4 +222,4 @@ MonoBehaviour:
       HP: 100
     GunBarrels: []
   moveTowards: 1
-  speed: 3
+  speed: 8
