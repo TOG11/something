@@ -12,9 +12,7 @@ public class Spawner : MonoBehaviour
     public Vector3 player_start_pos = Vector3.zero;
     public float enemy_z_pos = 50.0f;
 
-    [System.NonSerialized]
     public GameClasses.Player player = new GameClasses.Player();
-    [System.NonSerialized]
     public List<GameClasses.Enemy> enemies = new List<GameClasses.Enemy>();
 
     public static Spawner singleton = null;
@@ -61,6 +59,7 @@ public class Spawner : MonoBehaviour
                 break;
             }
         }
+        FuncUtils.RemoveEnemyCallback(enemies);
     }
 
     private void Awake()
@@ -78,6 +77,7 @@ public class Spawner : MonoBehaviour
             float y = Random.Range(-10, 10);
             create_enemy(new Vector3(x, y, enemy_z_pos));
         }
+        FuncUtils.AddEnemyCallback(enemies);
     }
 
     private void Update()

@@ -620,7 +620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_prefab: {fileID: 2142346890039965897, guid: f671167c7cee4f6418b76447953658c4, type: 3}
-  enemy_prefab: {fileID: 2706577121483506794, guid: ec2c4f05b59488441be3dc3896ab18ea, type: 3}
+  enemy_prefab: {fileID: 6606586650921902143, guid: fb6b3f68871741d47b80d8129c158bfc, type: 3}
   player_start_pos: {x: 0, y: 0, z: 0}
   enemy_z_pos: 50
   Target: {fileID: 140721614}

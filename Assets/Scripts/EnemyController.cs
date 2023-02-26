@@ -7,13 +7,11 @@ public class EnemyController : MonoBehaviour
     public float speed = 10.0f;
 
     private GameClasses.Player player;
-    private List<GameClasses.Enemy> enemies;
     private bool move_to_player = true;
 
     private void Awake()
     {
         player = Spawner.singleton.player;
-        enemies = Spawner.singleton.enemies;
     }
 
     private void Update()
