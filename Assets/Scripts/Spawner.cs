@@ -15,18 +15,22 @@ public class Spawner : MonoBehaviour
     public Vector2 enemy_horiz_pos_range = new Vector2(-10, 10);
     public Vector2 enemy_z_range = new Vector2(50, 70);
 
-    [Header("Misc")]
+    [Header("Objects")]
     public GameObject Target;
     public TextMeshProUGUI wave_text;
+    public TextMeshProUGUI score_text;
+    public TextMeshProUGUI health_level;
 
     [System.NonSerialized]
     public GameClasses.Player player = new GameClasses.Player();
     [System.NonSerialized]
     public List<GameClasses.Enemy> enemies = new List<GameClasses.Enemy>();
+    [System.NonSerialized]
 
     public static Spawner singleton = null;
     /* Wave starts at zero with no enemies on screen. */
     private int current_wave = 0;
+    private int score = 0;
 
     private void create_player()
     {
@@ -65,6 +69,24 @@ public class Spawner : MonoBehaviour
             {
                 Destroy(enemies[i].instance);
                 enemies.RemoveAt(i);
+
+                break;
+            }
+        }
+    }
+
+    public void kill_enemy(GameObject go)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i].instance == go)
+            {
+                score += 1;
+                score_text.text = $"Score: {score}";
+
+                Destroy(enemies[i].instance);
+                enemies.RemoveAt(i);
+
                 break;
             }
         }
@@ -91,6 +113,8 @@ public class Spawner : MonoBehaviour
     private void Update()
     {
         Target.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 32));
+
+        health_level.text = $"Health: {player.Health.HP}";
 
         if (enemies.Count == 0)
         {
