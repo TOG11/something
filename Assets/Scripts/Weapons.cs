@@ -13,8 +13,8 @@ public class Weapons : MonoBehaviour
     internal List<GameObject> ENEMY_TEMP_PARENT = new List<GameObject>();
     public static Weapons singleton;
     public List<Action> PlayerCallbacks = new List<Action>();
-    public List<Action> EnemyCallbacks = new List<Action>();
     public int EnemyBulletIntervalInSecinds = 1;
+    public List<GameClasses.Enemy> enemies = new List<GameClasses.Enemy>();
 
     private void Awake()
     {
@@ -28,16 +28,6 @@ public class Weapons : MonoBehaviour
         PlayerCallbacks.Add(() => { RunPlayerCallbacks(Spawner.singleton.player); });
     }
 
-    internal void AddEnemyCallback(List<GameClasses.Enemy> e)
-    {
-        EnemyCallbacks.Add(() => { RunEnemyCallbacks(e); });
-    }
-
-    internal void RemoveEnemyCallback(List<GameClasses.Enemy> e)
-    {
-        EnemyCallbacks.Remove(() => { RunEnemyCallbacks(e); });
-    }
-
     public void RunPlayerCallbacks(GameClasses.Player player)
     {
         if (Input.GetMouseButtonDown(0) && !player.shoot)
@@ -45,7 +35,7 @@ public class Weapons : MonoBehaviour
             PLAYER_TEMP_PARENT = new GameObject("BulletParent");
             foreach (var gb in player.GunBarrels)
             {
-                GameObject bullet = Instantiate(EnemyBulletPrefab);
+                GameObject bullet = Instantiate(BulletPrefab);
                 bullet.transform.position = gb.transform.position;
                 bullet.transform.parent = PLAYER_TEMP_PARENT.transform;
             }
@@ -58,13 +48,13 @@ public class Weapons : MonoBehaviour
             r.useGravity = false;
             PLAYER_TEMP_PARENT.transform.parent = null;
             r.velocity = LookingTowards * 80;
-            Shoot(player);
+            ShootCooldowm(player);
         }
     }
 
-    public void RunEnemyCallbacks(List<GameClasses.Enemy> enemys)
+    public void RunEnemyCallbacks()
     {
-        foreach (var enemy in enemys)
+        foreach (var enemy in enemies)
         {
             if (!enemy.shoot)
             {
@@ -73,7 +63,7 @@ public class Weapons : MonoBehaviour
                 List<GameObject> bullets = new List<GameObject>();
                 foreach (var gb in enemy.GunBarrels)
                 {
-                    GameObject bullet = Instantiate(BulletPrefab);
+                    GameObject bullet = Instantiate(EnemyBulletPrefab);
                     bullet.transform.position = gb.transform.position;
                     bullets.Add(bullet);
                 }
@@ -85,29 +75,30 @@ public class Weapons : MonoBehaviour
                     r.drag = 0;
                     r.useGravity = false;
                     r.velocity = new Vector3(0, 0, -1) * UnityEngine.Random.Range(50, 80);
-                    Shoot(null, enemy, TEMP_PARENT);
+                    ShootCooldowm(null, enemy, TEMP_PARENT);
                 }
             }
         }
     }
 
-    public void Shoot(GameClasses.Player player = null, GameClasses.Enemy enemy = null, GameObject TEMP_PARENT = null)
+    public void ShootCooldowm(GameClasses.Player player = null, GameClasses.Enemy enemy = null, GameObject TEMP_PARENT = null)
     {
         if (player != null)
             StartCoroutine(FuncUtils.Wait(2f, () => { player.shoot = false; PLAYER_TEMP_PARENT = null; }));
         else
         {
-            enemy.shoot = false; ENEMY_TEMP_PARENT.Remove(TEMP_PARENT);
+            enemy.shoot = false; ENEMY_TEMP_PARENT.Remove(TEMP_PARENT); Destroy(TEMP_PARENT);
         }
     }
 
     private void Update()
     {
+        enemies = Spawner.singleton.enemies;
         PlayerCallbacks.ForEach((A) => { A.Invoke(); });
         if (!awaiting)
         {
             awaiting = true;
-            StartCoroutine(FuncUtils.Wait(EnemyBulletIntervalInSecinds, () => { EnemyCallbacks.ForEach((A) => { A.Invoke(); awaiting = false; }); }));
+            StartCoroutine(FuncUtils.Wait(EnemyBulletIntervalInSecinds, () => { RunEnemyCallbacks(); awaiting = false; }));
         }
     }
     internal bool awaiting;

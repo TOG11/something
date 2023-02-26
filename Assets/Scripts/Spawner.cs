@@ -88,7 +88,6 @@ public class Spawner : MonoBehaviour
                 break;
             }
         }
-        FuncUtils.RemoveEnemyCallback(enemies);
     }
 
     private void Awake()
@@ -107,7 +106,6 @@ public class Spawner : MonoBehaviour
             float z = Random.Range(enemy_z_range.x, enemy_z_range.y);
             create_enemy(new Vector3(x, y, z));
         }
-        FuncUtils.AddEnemyCallback(enemies);
     }
 
     private void Update()
