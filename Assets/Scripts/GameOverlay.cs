@@ -5,7 +5,7 @@ public class GameOverlay : MonoBehaviour
     public GameObject overlay = null;
     private bool overlay_enabled = false;
 
-    private void Start()
+    private void Awake()
     {
         overlay.SetActive(false);
     }

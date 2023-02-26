@@ -1,5 +1,5 @@
-using UnityEngine;
 using GameSystem;
+using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
@@ -28,10 +28,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             move_to_player = false;
-        }
 
-        if (!move_to_player)
-        {
             Vector3 pos = transform.position;
             transform.position = new Vector3(pos.x, pos.y, pos.z - step);
 

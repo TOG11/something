@@ -1,16 +1,18 @@
+using GameSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using GameSystem;
 
 public class Weapons : MonoBehaviour
 {
     public GameObject BulletPrefab;
     public float speed = 300.0f;
-    internal GameObject TEMP_PARENT;
+
     public static Weapons singleton;
     public List<Action> Callbacks = new List<Action>();
+
+    internal GameObject temp_parent;
 
     private void Start()
     {
@@ -21,29 +23,33 @@ public class Weapons : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !player.shoot)
         {
-            TEMP_PARENT = new GameObject("BulletParent");
-            foreach (var gb in player.GunBarrels)
+            temp_parent = new GameObject("BulletParent");
+            foreach (GameObject gb in player.GunBarrels)
             {
                 GameObject bullet = Instantiate(BulletPrefab);
                 bullet.transform.position = gb.transform.position;
-                bullet.transform.parent = TEMP_PARENT.transform;
+                bullet.transform.parent = temp_parent.transform;
             }
-            var LookingTowards = player.instance.transform.forward;
-            TEMP_PARENT.transform.parent = player.instance.transform;
-            TEMP_PARENT.transform.LookAt(LookingTowards);
-            TEMP_PARENT.transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            var r = TEMP_PARENT.AddComponent<Rigidbody>();
-            r.drag = 0;
-            r.useGravity = false;
-            TEMP_PARENT.transform.parent = null;
-            r.velocity = LookingTowards * 80;
+
+            Vector3 forward_dir = player.instance.transform.forward;
+
+            temp_parent.transform.parent = player.instance.transform;
+            temp_parent.transform.LookAt(forward_dir);
+            temp_parent.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            temp_parent.transform.parent = null;
+
+            Rigidbody rb = temp_parent.AddComponent<Rigidbody>();
+            rb.drag = 0;
+            rb.useGravity = false;
+            rb.velocity = forward_dir * 80;
+
             Shoot(player);
         }
     }
 
     public void Shoot(GameClasses.Player player)
     {
-        StartCoroutine(Wait(2f, () => { player.shoot = false; TEMP_PARENT = null; }));
+        StartCoroutine(Wait(2.0f, () => { player.shoot = false; temp_parent = null; }));
     }
 
     private void Update()
