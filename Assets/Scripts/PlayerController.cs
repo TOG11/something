@@ -1,12 +1,7 @@
 using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
-    internal Camera cam;
     public float speed = 5.0f;
-    private void Awake()
-    {
-        cam = Camera.main;
-    }
 
     private Vector3 get_mouse_to_world_pos()
     {
@@ -14,8 +9,8 @@ public class PlayerController : MonoBehaviour
         lookat_pos.x = Mathf.Clamp(lookat_pos.x, 0.0f, Screen.width);
         lookat_pos.y = Mathf.Clamp(lookat_pos.y, 0.0f, Screen.height);
 
-        lookat_pos.z = transform.position.z - cam.transform.position.z;
-        lookat_pos = cam.ScreenToWorldPoint(lookat_pos);
+        lookat_pos.z = transform.position.z - Camera.main.transform.position.z;
+        lookat_pos = Camera.main.ScreenToWorldPoint(lookat_pos);
 
         return lookat_pos;
     }

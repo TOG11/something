@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameSystem;
 
 public class Bullet : MonoBehaviour
 {
@@ -15,17 +16,18 @@ public class Bullet : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask) && !stop)
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Spawner.singleton.Enemys.ForEach((enemy) =>
+            for (int i = 0; i < Spawner.singleton.enemies.Count; i++)
             {
                 if (hit.transform.gameObject.tag == "SHIP")
                 {
+                    GameClasses.Enemy enemy = Spawner.singleton.enemies[i];
                     enemy.Health.RemoveHealth(Random.Range(0, 20));
                     if (enemy.Health.HP <= 0)
-                        Destroy(hit.transform.gameObject);
+                        Spawner.singleton.remove_enemy(hit.transform.gameObject);
                     else
                         stop = true;
                 }
-            });
+            }
         }
     }
 }

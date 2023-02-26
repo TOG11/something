@@ -1,22 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ParticleSystemJobs;
 using System;
 using GameSystem;
 
 public class Weapons : MonoBehaviour
 {
     public GameObject BulletPrefab;
-    public float speed;
+    public float speed = 300.0f;
     internal GameObject TEMP_PARENT;
     public static Weapons singleton;
     public List<Action> Callbacks = new List<Action>();
 
     private void Start()
     {
-        foreach (GameClasses.Player player in Spawner.singleton.Players)
-            Callbacks.Add(() => { RunPlayerCallbacks(player); });
+        Callbacks.Add(() => { RunPlayerCallbacks(Spawner.singleton.player); });
     }
 
     public void RunPlayerCallbacks(GameClasses.Player player)
@@ -30,8 +28,8 @@ public class Weapons : MonoBehaviour
                 bullet.transform.position = gb.transform.position;
                 bullet.transform.parent = TEMP_PARENT.transform;
             }
-            var LookingTowards = player.playerInstance.transform.forward;
-            TEMP_PARENT.transform.parent = player.playerInstance.transform;
+            var LookingTowards = player.instance.transform.forward;
+            TEMP_PARENT.transform.parent = player.instance.transform;
             TEMP_PARENT.transform.LookAt(LookingTowards);
             TEMP_PARENT.transform.Translate(Vector3.forward * speed * Time.deltaTime);
             var r = TEMP_PARENT.AddComponent<Rigidbody>();

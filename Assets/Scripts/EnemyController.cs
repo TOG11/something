@@ -1,48 +1,46 @@
 using UnityEngine;
 using GameSystem;
+using System.Collections.Generic;
+
 public class EnemyController : MonoBehaviour
 {
-    internal Camera cam;
-    public GameClasses.Player TargetPlayer;
-    public bool moveTowards = true;
-    public float speed = 5.0f;
+    public float speed = 10.0f;
+
+    private GameClasses.Player player;
+    private List<GameClasses.Enemy> enemies;
+    private bool move_to_player = true;
 
     private void Awake()
     {
-        if (Spawner.singleton.Players.Count - 1 >= 1)
-            TargetPlayer = Spawner.singleton.Players[Random.Range(0, Spawner.singleton.Players.Count - 1)];
-        else
-            TargetPlayer = Spawner.singleton.Players[0];
-        cam = Camera.main;
+        player = Spawner.singleton.player;
+        enemies = Spawner.singleton.enemies;
     }
 
-
-    internal bool set_speed;
-    internal bool go_to_cam;
     private void Update()
     {
-        if (moveTowards)
+        Vector3 player_pos = player.instance.transform.position;
+        float distance_from_player = Vector3.Distance(transform.position, player_pos);
+
+        float step = speed * Time.deltaTime;
+
+        if (distance_from_player >= 5.0f && move_to_player)
         {
-            var step = speed * Time.deltaTime;
-            if (Vector3.Distance(transform.position, TargetPlayer.playerInstance.transform.position) > 6 && !go_to_cam)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, TargetPlayer.playerInstance.transform.position, step);
-            }
-            else if (Vector3.Distance(transform.position, Camera.main.transform.position) > 0.001f)
-            {
-                go_to_cam = true;
-                if (!set_speed)
-                {
-                    set_speed = true;
-                    speed = (speed * 2) + 3;
-                }
-                transform.Rotate(Camera.main.transform.rotation.eulerAngles * Time.deltaTime * speed);
-                transform.position = Vector3.MoveTowards(transform.position, Camera.main.transform.position, step);
-            }
-            if (Vector3.Distance(transform.position, Camera.main.transform.position) < 0.001f)
-            {
-                moveTowards = false;
-            }
+            transform.position = Vector3.MoveTowards(transform.position, player_pos, step);
+        }
+        else
+        {
+            move_to_player = false;
+        }
+
+        if (!move_to_player)
+        {
+            Vector3 pos = transform.position;
+            transform.position = new Vector3(pos.x, pos.y, pos.z - step);
+
+            /* Remove enemy when it passes past the camera, also possibly
+             * doing damage to the player? */
+            if (transform.position.z < Camera.main.transform.position.z)
+                Spawner.singleton.remove_enemy(gameObject);
         }
     }
 }
