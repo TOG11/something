@@ -24,24 +24,6 @@ namespace GameSystem
                 return HP;
             }
         }
-
-        [Serializable]
-        public class Ammo
-        {
-            public static int Mag = 25;
-
-            public int AddAmmo(int add)
-            {
-                Mag += add;
-                return Mag;
-            }
-
-            public int RemoveHealth(int rem)
-            {
-                Mag -= rem;
-                return Mag;
-            }
-        }
     }
 
     [Serializable]

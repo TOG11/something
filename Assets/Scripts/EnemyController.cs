@@ -1,10 +1,10 @@
 using UnityEngine;
 using GameSystem;
-using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour
 {
     public float speed = 10.0f;
+    public float pass_by_damage = 0.5f;
 
     private GameClasses.Player player;
     private bool move_to_player = true;
@@ -35,10 +35,12 @@ public class EnemyController : MonoBehaviour
             Vector3 pos = transform.position;
             transform.position = new Vector3(pos.x, pos.y, pos.z - step);
 
-            /* Remove enemy when it passes past the camera, also possibly
-             * doing damage to the player? */
+            /* Damage player and remove enemy when it passes past the camera */
             if (transform.position.z < Camera.main.transform.position.z)
+            {
+                player.Health.RemoveHealth(pass_by_damage);
                 Spawner.singleton.remove_enemy(gameObject);
+            }
         }
     }
 }
