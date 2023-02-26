@@ -2,10 +2,21 @@ using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour
 {
+    private static AudioPlayer instance = null;
+
     private void Awake()
     {
-        transform.position = Camera.main.transform.position;
-        DontDestroyOnLoad(gameObject);
+        if (!instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            transform.position = Camera.main.transform.position;
+            return;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
