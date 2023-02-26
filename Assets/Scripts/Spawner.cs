@@ -17,6 +17,8 @@ public class Spawner : MonoBehaviour
 
     [Header("Objects")]
     public GameObject Target;
+    public GameObject TargetParent;
+    public GameObject EnemyHealth;
     public TextMeshProUGUI wave_text;
     public TextMeshProUGUI score_text;
     public TextMeshProUGUI health_level;
@@ -29,10 +31,7 @@ public class Spawner : MonoBehaviour
     /* Wave starts at zero with no enemies on screen. */
     private int current_wave = 0;
     private int score = 0;
-
     public static Spawner singleton = null;
-
-
     private void create_player()
     {
         GameObject plr = Instantiate(player_prefab);
@@ -49,7 +48,7 @@ public class Spawner : MonoBehaviour
     private void create_enemy(Vector3 pos)
     {
         GameClasses.Enemy enemy = new GameClasses.Enemy();
-        enemy_prefab.name += "_"+Random.value;
+        enemy_prefab.name += "_" + Random.value;
         GameObject go = Instantiate(enemy_prefab);
         foreach (Transform barrel in go.GetComponentsInChildren<Transform>())
             if (barrel.gameObject.tag == "BARREL")
@@ -111,9 +110,11 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    internal Vector3 enemyHEalthGUIstartPos;
     private void Update()
     {
         Target.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 32));
+        EnemyHealth.transform.position = enemyHEalthGUIstartPos;
 
         health_level.text = $"Health: {player.Health.HP}";
 

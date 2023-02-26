@@ -1,5 +1,6 @@
 using GameSystem;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
             get_mouse_to_world_pos(), step);
     }
 
+    
     private void FixedUpdate()
     {
         int layerMask = ~(1 << 8);
@@ -36,6 +38,14 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.yellow);
             if (hit.transform.gameObject.CompareTag("SHIP"))
             {
+                foreach (GameClasses.Enemy enemy in Spawner.singleton.enemies)
+                {
+                    if (enemy.instance == hit.transform.gameObject)
+                    {
+                        float HP = enemy.Health.HP;
+                        Spawner.singleton.EnemyHealth.GetComponent<TextMeshProUGUI>().text = "Health: " + HP;
+                    }
+                }
                 FuncUtils.HideTarget(false);
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.green);
                 RectTransform enemyRect = hit.transform.gameObject.GetComponent<RectTransform>();

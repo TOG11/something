@@ -84,9 +84,9 @@ namespace GameSystem
             return tMin;
         }
 
-        public static void HideTarget(bool hide)
+        public static void HideTarget(object hide=null)
         {
-            Spawner.singleton.Target.SetActive(!hide);
+            Spawner.singleton.TargetParent.SetActive(!(bool)hide);
         }
     }
 };
