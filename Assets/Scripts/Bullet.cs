@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Bullet : MonoBehaviour
 {
+    [Header("Health")]
     [Range(0, 50)]
     public int health_min = 3;
     [Range(0, 50)]
@@ -15,9 +16,12 @@ public class Bullet : MonoBehaviour
     [Range(0, 50)]
     public int enmmy_health_max = 7;
 
+    [Header("Scene")]
     public string death_scene;
 
+    [Header("Options")]
     public bool IsEnemy;
+
     internal List<GameClasses.Enemy> enemies;
     internal bool stop;
 
@@ -52,6 +56,11 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    private void delete_bullet()
+    {
+        Destroy(transform.gameObject);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("SHIP") && !other.gameObject.CompareTag("BARREL"))
@@ -65,11 +74,6 @@ public class Bullet : MonoBehaviour
                 SceneManager.LoadScene(death_scene);
             }
         }
-    }
-
-    private void delete_bullet()
-    {
-        Destroy(transform.gameObject);
     }
 
     private void Update()
