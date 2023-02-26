@@ -156,6 +156,7 @@ MonoBehaviour:
   EnemyBulletPrefab: {fileID: 5495145829446600866, guid: 3e7310603d4056749b5bbd7f28d97ba8, type: 3}
   speed: 300
   EnemyBulletIntervalInSecinds: 1
+  enemies: []
 --- !u!4 &46411492
 Transform:
   m_ObjectHideFlags: 0
