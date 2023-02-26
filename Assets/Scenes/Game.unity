@@ -619,21 +619,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2b1c6ad121e544b9b382eafbcf24d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player_prefab: {fileID: 2142346890039965897, guid: f671167c7cee4f6418b76447953658c4, type: 3}
+  enemy_prefab: {fileID: 2706577121483506794, guid: ec2c4f05b59488441be3dc3896ab18ea, type: 3}
+  player_start_pos: {x: 0, y: 0, z: 0}
+  enemy_z_pos: 50
   Target: {fileID: 140721614}
-  Players:
-  - playerInstance: {fileID: 0}
-    playerPrefab: {fileID: 7988293650094258247, guid: 7440965630f138d41bb9077b1686b00d, type: 3}
-    Health:
-      HP: 100
-    GunBarrels: []
-  PlayerStartingPosition: {x: 0, y: 0, z: 0}
-  EnemyStartingPosition: {x: 0, y: 9.46, z: 32.72}
-  Enemys:
-  - enemyInstance: {fileID: 0}
-    enemyPrefab: {fileID: 3990068940671713099, guid: ec2c4f05b59488441be3dc3896ab18ea, type: 3}
-    Health:
-      HP: 100
-    GunBarrels: []
 --- !u!4 &1812426528
 Transform:
   m_ObjectHideFlags: 0
@@ -802,7 +792,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5725145725132113686}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
