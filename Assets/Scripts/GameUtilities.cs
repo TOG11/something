@@ -66,16 +66,6 @@ namespace GameSystem
             yield return new WaitForEndOfFrame();
         }
 
-        public static void AddEnemyCallback(List<GameClasses.Enemy> enemys)
-        {
-            Weapons.singleton.AddEnemyCallback(enemys);
-        }
-
-        public static void RemoveEnemyCallback(List<GameClasses.Enemy> enemys)
-        {
-            Weapons.singleton.RemoveEnemyCallback(enemys);
-        }
-
         public static Transform GetClosestEnemy(Vector3 fromPos)
         {
             Transform tMin = null;
