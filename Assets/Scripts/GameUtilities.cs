@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 namespace GameSystem
 {
@@ -10,18 +10,16 @@ namespace GameSystem
         [Serializable]
         public class Health
         {
-            public float HP = 100;
+            public float HP = 100.0f;
 
-            public float AddHealth(float add)
+            public float AddHealth(float f)
             {
-                HP += add;
-                return HP;
+                return HP += f;
             }
 
-            public float RemoveHealth(float rem)
+            public float RemoveHealth(float f)
             {
-                HP -= rem;
-                return HP;
+                return HP -= f;
             }
         }
     }

@@ -1,8 +1,8 @@
+using GameSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using GameSystem;
 
 public class Weapons : MonoBehaviour
 {
@@ -20,6 +20,8 @@ public class Weapons : MonoBehaviour
     {
         singleton = this;
     }
+
+    internal GameObject temp_parent;
 
     private void Start()
     {
