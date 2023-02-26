@@ -622,7 +622,7 @@ MonoBehaviour:
   Target: {fileID: 140721614}
   Players:
   - playerInstance: {fileID: 0}
-    playerPrefab: {fileID: 7719435436384182071, guid: 7440965630f138d41bb9077b1686b00d, type: 3}
+    playerPrefab: {fileID: 7988293650094258247, guid: 7440965630f138d41bb9077b1686b00d, type: 3}
     Health:
       HP: 100
     GunBarrels: []
@@ -630,7 +630,7 @@ MonoBehaviour:
   EnemyStartingPosition: {x: 0, y: 9.46, z: 32.72}
   Enemys:
   - enemyInstance: {fileID: 0}
-    enemyPrefab: {fileID: 7719435436384182071, guid: ec2c4f05b59488441be3dc3896ab18ea, type: 3}
+    enemyPrefab: {fileID: 3990068940671713099, guid: ec2c4f05b59488441be3dc3896ab18ea, type: 3}
     Health:
       HP: 100
     GunBarrels: []
