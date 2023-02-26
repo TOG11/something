@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameSystem;
 
 public class Bullet : MonoBehaviour
 {
@@ -21,11 +22,19 @@ public class Bullet : MonoBehaviour
                 {
                     enemy.Health.RemoveHealth(Random.Range(0, 20));
                     if (enemy.Health.HP <= 0)
+                    {
                         Destroy(hit.transform.gameObject);
+                    }   
                     else
                         stop = true;
                 }
             });
         }
+    }
+
+    private void Update()
+    {
+        if (transform.position.z > 200f)
+            Destroy(transform.parent.gameObject);
     }
 }

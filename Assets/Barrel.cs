@@ -10,13 +10,13 @@ public class Barrel : MonoBehaviour
 
         layerMask = ~layerMask;
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(transform.localPosition, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
         {
             print("target aquired");
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            Debug.DrawRay(transform.localPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             if (hit.transform.gameObject.tag == "SHIP")
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+                Debug.DrawRay(transform.localPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
                 Vector3 screenPoint = hit.transform.position;
                 screenPoint.z = 10.0f;
                 Vector3 screenPos = Camera.main.ScreenToWorldPoint(screenPoint);
@@ -25,8 +25,8 @@ public class Barrel : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
-
+            print("target not found");
+            Debug.DrawRay(transform.localPosition, transform.TransformDirection(Vector3.forward), Color.red);
         }
     }
 }
