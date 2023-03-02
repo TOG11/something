@@ -17,16 +17,31 @@ public class PlayerController : MonoBehaviour
 
         return lookat_pos;
     }
-
+    
+    public bool notTurning = true;
     private void Update()
     {
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(
             transform.position,
             get_mouse_to_world_pos(), step);
+
+        //dynamic animations
+        if (Vector3.Distance(transform.position, get_mouse_to_world_pos()) < 1.9f && !notTurning)
+        {
+            notTurning = true;
+            StartCoroutine(FuncUtils.RotateTowards(transform, Vector3.zero, 0.1f, () => {
+                notTurning = false;
+            }));
+        }
+        else
+        {
+            transform.Rotate(-new Vector3(0, 0, Input.GetAxis("Mouse X")) * Time.deltaTime * 120.0f);
+            transform.Rotate(-new Vector3(Input.GetAxis("Mouse Y"), 0, 0) * Time.deltaTime * 520.0f);
+        }
     }
 
-    
+
     private void FixedUpdate()
     {
         int layerMask = ~(1 << 8);
