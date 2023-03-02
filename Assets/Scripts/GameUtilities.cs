@@ -88,5 +88,21 @@ namespace GameSystem
         {
             Spawner.singleton.TargetParent.SetActive(!(bool)hide);
         }
+
+        public static IEnumerator<WaitForEndOfFrame> RotateTowards(Transform current, Vector3 targetEuler, float dur, Action Callback = null)
+        {
+            float t = 0f;
+            Quaternion start = current.rotation;
+            Quaternion rotation = Quaternion.Euler(targetEuler);
+            while (t < dur)
+            {
+                current.rotation = Quaternion.Slerp(start, rotation, t / dur);
+                t += Time.deltaTime;
+                yield return null;
+            }
+            current.rotation = rotation;
+            if (Callback != null)
+                Callback.Invoke();
+        }
     }
 };
